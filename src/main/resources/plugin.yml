@@ -1,0 +1,10 @@
+name: LiteBansGUI
+version: ${project.version}
+main: de.marvinleiers.litebansgui.LiteBansGUI
+api-version: 1.15
+authors: [Marvin2k0]
+website: www.marvinleiers.de
+commands:
+  punish:
+    permission: bangui.gui
+    aliases: [bgui]
