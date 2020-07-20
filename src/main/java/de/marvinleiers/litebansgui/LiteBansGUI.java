@@ -34,13 +34,13 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
 
         Messages.setUp(this);
 
-        chatCommands.put(1, "kick %player% First offense");
-        chatCommands.put(2, "mute %player% 15m Second offense");
-        chatCommands.put(3, "mute %player% 1h Third offense");
-        chatCommands.put(4, "mute %player% 5h Fourth offense");
-        chatCommands.put(5, "mute %player% 1d Fifth offense");
-        chatCommands.put(6, "mute %player% 7d Sixth offense");
-        chatCommands.put(7, "mute %player% Seventh offense");
+        chatCommands.put(1, "mute %silent% %player% 5m First offense");
+        chatCommands.put(2, "mute %silent% %player% 15m Second offense");
+        chatCommands.put(3, "mute %silent% %player% 1h Third offense");
+        chatCommands.put(4, "mute %silent% %player% 5h Fourth offense");
+        chatCommands.put(5, "mute %silent% %player% 1d Fifth offense");
+        chatCommands.put(6, "mute %silent% %player% 7d Sixth offense");
+        chatCommands.put(7, "mute %silent% %player% Seventh offense");
 
         this.getServer().getPluginManager().registerEvents(this, this);
         this.getCommand("punish").setExecutor(this);
@@ -80,7 +80,7 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                     @Override
                     public void onClick(Player player)
                     {
-                        Bukkit.dispatchCommand(player, "tempban " + target.getName() + (silent.get() ? "-s" : "") + " 14d advertisment");
+                        Bukkit.dispatchCommand(player, "tempban " + target.getName() + (silent.get() ? " -s" : "") + " 14d advertisment");
                         player.closeInventory();
                     }
                 });
@@ -91,7 +91,7 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                     @Override
                     public void onClick(Player player)
                     {
-                        Bukkit.dispatchCommand(player, "tempban " + target.getName() + (silent.get() ? "-s" : "") + " 30d advertisment");
+                        Bukkit.dispatchCommand(player, "tempban " + target.getName() + (silent.get() ? " -s" : "") + " 30d advertisment");
                         player.closeInventory();
                     }
                 });
@@ -102,7 +102,7 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                     @Override
                     public void onClick(Player player)
                     {
-                        Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? "-s" : "") + " advertisment");
+                        Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? " -s" : "") + " advertisment");
                         player.closeInventory();
                     }
                 });
@@ -128,7 +128,7 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                     @Override
                     public void onClick(Player player)
                     {
-                        Bukkit.dispatchCommand(player, "tempban " + target.getName() + (silent.get() ? "-s" : "") + " 30d xray");
+                        Bukkit.dispatchCommand(player, "tempban " + target.getName() + (silent.get() ? " -s" : "") + " 30d xray");
                         player.closeInventory();
                     }
                 });
@@ -139,7 +139,7 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                     @Override
                     public void onClick(Player player)
                     {
-                        Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? "-s" : "") + " xray");
+                        Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? " -s" : "") + " xray");
                         player.closeInventory();
                     }
                 });
@@ -165,7 +165,7 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                     @Override
                     public void onClick(Player player)
                     {
-                        Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? "-s" : "") + " Change your name and appeal or play in an alt");
+                        Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? " -s" : "") + " Change your name and appeal or play in an alt");
                         player.closeInventory();
                     }
                 });
@@ -184,15 +184,20 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
             @Override
             public void onClick(Player player)
             {
-                Icon firstOffense = new Icon(ItemUtils.create(Material.EMERALD_BLOCK, "&cFirst offense")).addClickAction(new GuiClickAction()
+                GuiHolder holder = new GuiHolder(9, target.getName());
+
+                Icon firstOffense = new Icon(ItemUtils.create(Material.EMERALD_BLOCK, "§cFirst offense")).addClickAction(new GuiClickAction()
                 {
                     @Override
                     public void onClick(Player player)
                     {
-                        Bukkit.dispatchCommand(player, "ipban " + target.getName() + (silent.get() ? "-s" : "") + " Ban evasion");
+                        Bukkit.dispatchCommand(player, "ipban " + target.getName() + (silent.get() ? " -s" : "") + " Ban evasion");
                         player.closeInventory();
                     }
                 });
+                holder.setIcon(0, firstOffense);
+
+                player.openInventory(holder.getInventory());
             }
         });
 
@@ -217,7 +222,7 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                             @Override
                             public void onClick(Player player)
                             {
-                                Bukkit.dispatchCommand(player, "tempban " + target.getName() + (silent.get() ? "-s" : "") + " 30d Illegal items/names");
+                                Bukkit.dispatchCommand(player, "tempban " + target.getName() + (silent.get() ? " -s" : "") + " 30d Illegal items/names");
                                 player.closeInventory();
                             }
                         });
@@ -228,7 +233,7 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                             @Override
                             public void onClick(Player player)
                             {
-                                Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? "-s" : "") + " Illegal items/names");
+                                Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? " -s" : "") + " Illegal items/names");
                                 player.closeInventory();
                             }
                         });
@@ -253,7 +258,7 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                             @Override
                             public void onClick(Player player)
                             {
-                                Bukkit.dispatchCommand(player, "tempban " + target.getName() + (silent.get() ? "-s" : "") + " 30d Abuse of glitches");
+                                Bukkit.dispatchCommand(player, "tempban " + target.getName() + (silent.get() ? " -s" : "") + " 30d Abuse of glitches");
                                 player.closeInventory();
                             }
                         });
@@ -264,7 +269,7 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                             @Override
                             public void onClick(Player player)
                             {
-                                Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? "-s" : "") + " Abuse of glitches");
+                                Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? " -s" : "") + " Abuse of glitches");
                                 player.closeInventory();
                             }
                         });
@@ -306,7 +311,19 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                         @Override
                         public void onClick(Player player)
                         {
-                            Bukkit.dispatchCommand(player, chatCommands.get(finalI).replace("%player%", target.getName()));
+                            String command = chatCommands.get(finalI).replace("%player%", target.getName());
+
+                            if (silent.get())
+                            {
+                                command = command.replace("%silent%", "-s");
+                            }
+                            else
+                            {
+                                command = command.replace("%silent%", "");
+                            }
+
+                            Bukkit.dispatchCommand(player, command);
+
                             player.closeInventory();
                         }
                     }));
@@ -334,16 +351,42 @@ public final class LiteBansGUI extends JavaPlugin implements Listener
                 {
                     int finalI = i;
 
-                    cats.setIcon(i - 1, new Icon(ItemUtils.create(Material.EMERALD_BLOCK, "§c" + cat[i - 1])).addClickAction(new GuiClickAction()
+                    cats.setIcon(i - 1, new Icon(ItemUtils.create(Material.REDSTONE_BLOCK, "§c" + cat[i - 1])).addClickAction(new GuiClickAction()
                     {
                         @Override
                         public void onClick(Player player)
                         {
-                            Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? "-s" : "") + " " + cat[finalI - 1]);
-                            player.closeInventory();
+                            GuiHolder holder = new GuiHolder(9, target.getName());
+
+                            holder.setIcon(0, new Icon(ItemUtils.create(Material.EMERALD_BLOCK, "§cFirst offense")).addClickAction(new GuiClickAction()
+                            {
+                                @Override
+                                public void onClick(Player player)
+                                {
+                                    Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? " -s" : "") + " 30d Hacks (" + cat[finalI - 1] + ")");
+                                    player.closeInventory();
+                                }
+                            }));
+
+                            holder.setIcon(1, new Icon(ItemUtils.create(Material.EMERALD_BLOCK, "§cSecond offense")).addClickAction(new GuiClickAction()
+                            {
+                                @Override
+                                public void onClick(Player player)
+                                {
+                                    Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? " -s" : "") + " Hacks (" + cat[finalI - 1] + ")");
+                                    player.closeInventory();
+                                }
+                            }));
+
+                            player.openInventory(holder.getInventory());
                         }
                     }));
                 }
+
+                /*
+                Bukkit.dispatchCommand(player, "ban " + target.getName() + (silent.get() ? " -s" : "") + " Hacks (" + cat[finalI - 1] + ")");
+                            player.closeInventory();
+                 */
 
                 player.openInventory(cats.getInventory());
             }
